@@ -15,4 +15,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "GYMATCH"
+
 include(":androidApp", ":shared")
