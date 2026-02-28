@@ -1,5 +1,15 @@
 plugins {
     id("com.android.library")
+    id("org.jetbrains.kotlin.multiplatform")
+}
+
+kotlin {
+    androidTarget()
+
+    sourceSets {
+        val commonMain by getting
+        val commonTest by getting
+    }
 }
 
 android {

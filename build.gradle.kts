@@ -1,17 +1,6 @@
 plugins {
-    id("com.android.library")
-}
-
-android {
-    namespace = "com.gymatch.shared"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 26
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
+    id("com.android.application") version "8.5.2" apply false
+    id("com.android.library") version "8.5.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.9.24" apply false
+    id("org.jetbrains.kotlin.multiplatform") version "1.9.24" apply false
 }
