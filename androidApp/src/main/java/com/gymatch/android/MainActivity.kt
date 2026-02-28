@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            DiscoverScreen(viewModel)
+            DiscoverScreen(viewModel = viewModel)
         }
     }
 }
