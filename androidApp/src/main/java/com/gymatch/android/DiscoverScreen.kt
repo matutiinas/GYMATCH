@@ -12,8 +12,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gymatch.shared.DiscoverUiState
@@ -22,56 +22,34 @@ import com.gymatch.shared.Profile
 
 @Composable
 fun DiscoverScreen(viewModel: DiscoverViewModel) {
-    val uiState by viewModel.state.collectAsState()
+  val uiState by viewModel.state.collectAsState()
 
-    when (val state = uiState) {
-        DiscoverUiState.Loading -> {
-            Text(
-                text = "Cargando…",
-                modifier = Modifier.padding(16.dp),
-            )
+  when (val state = uiState) {
+    DiscoverUiState.Loading -> Text("Cargando…", modifier = Modifier.padding(16.dp))
+    DiscoverUiState.Empty -> Text("No hay perfiles", modifier = Modifier.padding(16.dp))
+    is DiscoverUiState.Error -> Text(state.message, modifier = Modifier.padding(16.dp), color = MaterialTheme.colorScheme.error)
+    is DiscoverUiState.Success -> {
+      LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+      ) {
+        items(state.profiles, key = { it.id }) { profile ->
+          ProfileCard(profile)
         }
-
-        DiscoverUiState.Empty -> {
-            Text(
-                text = "No hay perfiles",
-                modifier = Modifier.padding(16.dp),
-            )
-        }
-
-        is DiscoverUiState.Error -> {
-            Text(
-                text = state.message,
-                modifier = Modifier.padding(16.dp),
-                color = MaterialTheme.colorScheme.error,
-            )
-        }
-
-        is DiscoverUiState.Success -> {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-                items(state.profiles, key = { it.id }) { profile ->
-                    ProfileCard(profile)
-                }
-            }
-        }
+      }
     }
+  }
 }
 
 @Composable
 private fun ProfileCard(profile: Profile) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-            Text(
-                text = "${profile.name}, ${profile.age}",
-                style = MaterialTheme.typography.titleMedium,
-            )
-            Text(text = "Deporte: ${profile.sport}")
-            Text(text = "Nivel: ${profile.level}")
-            Text(text = profile.bio)
-        }
+  Card(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+      Text(text = "${profile.name}, ${profile.age}", style = MaterialTheme.typography.titleMedium)
+      Text(text = "Deporte: ${profile.sport}")
+      Text(text = "Nivel: ${profile.level}")
+      Text(text = profile.bio)
     }
+  }
 }

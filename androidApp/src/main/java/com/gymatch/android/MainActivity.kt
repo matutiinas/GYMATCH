@@ -12,11 +12,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val viewModel = DiscoverViewModel(
-            getDiscoverProfiles = GetDiscoverProfilesUseCase(FakeProfileRepository()),
+            getDiscoverProfiles = GetDiscoverProfilesUseCase(FakeProfileRepository())
         )
 
         setContent {
-            DiscoverScreen(viewModel = viewModel)
+            DiscoverScreen(viewModel)
         }
     }
 }
